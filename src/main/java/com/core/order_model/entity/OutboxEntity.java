@@ -22,12 +22,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OutboxEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class OutboxEntity extends BaseEntity {
     @Column(nullable = false, unique = true, length = 64)
     private String eventId;
 
