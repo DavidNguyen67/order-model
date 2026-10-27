@@ -12,6 +12,7 @@ import java.time.Instant;
 
 /**
  * Standard Envelope for all Kafka Events across the ecosystem.
+ * Serialized to JSON and stored in the Outbox payload column before publishing.
  */
 @Data
 @SuperBuilder

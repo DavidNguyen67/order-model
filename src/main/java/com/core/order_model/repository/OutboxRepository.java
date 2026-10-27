@@ -9,8 +9,13 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * JPA repository over the MySQL outbox table.
+ * Used by the Outbox relay (after-commit listener and Quartz polling job).
+ */
 @Repository
 public interface OutboxRepository extends JpaRepository<OutboxEntity, Long> {
+
     Optional<OutboxEntity> findByEventId(String eventId);
 
     List<OutboxEntity> findByStatusAndRetryCountLessThanOrderByCreatedAtAsc(

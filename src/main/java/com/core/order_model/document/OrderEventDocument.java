@@ -1,7 +1,11 @@
 package com.core.order_model.document;
 
 import com.core.order_common.enums.EventStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -10,7 +14,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Instant;
 
 /**
- * MongoDB Document for storing Kafka events (Event Sourcing / Event Log / Outbox pattern).
+ * MongoDB Document mirroring Kafka events of the Order domain
+ * (audit log / read model of the Transactional Outbox pipeline).
  */
 @Document(collection = "order_events")
 @CompoundIndex(name = "idx_agg_status", def = "{'aggregateId': 1, 'status': 1}")
@@ -42,7 +47,7 @@ public class OrderEventDocument {
     private Long offset;
 
     /**
-     * Payload stored as serialized JSON string or structured object.
+     * Payload stored as serialized JSON string.
      */
     private String payload;
 

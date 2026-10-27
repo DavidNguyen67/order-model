@@ -1,15 +1,16 @@
 package com.core.order_model.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 /**
- * JPA Entity for Orders with Optimistic Locking (@Version) to prevent race conditions.
+ * JPA Entity for Orders stored in MySQL.
+ * Inherits optimistic locking (@Version) from BaseEntity to prevent race conditions.
  */
 @Entity
 @Table(name = "orders", indexes = {
@@ -18,14 +19,9 @@ import java.time.LocalDateTime;
 })
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
-public class OrderEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class OrderEntity extends BaseEntity {
 
     @Column(nullable = false, unique = true, length = 64)
     private String orderNumber;
@@ -40,20 +36,6 @@ public class OrderEntity {
     @Column(nullable = false, length = 32)
     private OrderStatus status;
 
+    @Column(length = 512)
     private String notes;
-
-    /**
-     * Optimistic lock version field.
-     * Prevents lost updates and race condition collisions on concurrent mutations.
-     */
-    @Version
-    @Column(nullable = false)
-    private Long version;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 }

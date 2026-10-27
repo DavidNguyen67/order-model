@@ -1,7 +1,11 @@
 package com.core.order_model.document;
 
 import com.core.order_common.enums.IdempotencyStatus;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -48,7 +52,9 @@ public class IdempotencyRecordDocument {
 
     /**
      * Automatic TTL expiration managed by MongoDB.
+     * expireAfter = 0s means the document is evicted exactly AT the expireAt instant;
+     * the TTL duration itself is decided by whoever computes expireAt.
      */
-    @Indexed(expireAfter = "1d")
+    @Indexed(expireAfter = "0s")
     private Instant expireAt;
 }

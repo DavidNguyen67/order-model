@@ -1,5 +1,8 @@
 package com.core.order_model.event;
 
+/**
+ * Central registry of Kafka topics and event types used by the Outbox relay and consumers.
+ */
 public final class KafkaTopics {
 
     private KafkaTopics() {}
